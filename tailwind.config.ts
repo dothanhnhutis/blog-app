@@ -7,7 +7,16 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        xs: "440px",
+      },
+      backgroundImage: {
+        Hero: "url('/bg.jpg')",
+        section1: "url('/images/bg_gioithieu.jpg')",
+        section2: "url('/images/pexels-kinkate.jpeg')",
+      },
+    },
   },
   plugins: [],
 };
