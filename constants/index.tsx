@@ -8,29 +8,29 @@ export const sideBarData: SiderBarActionType[] = [
     type: "default",
     data: {
       path: "/manager/contacts",
-      name: "Contacts",
+      name: "Liên hệ",
       icon: <BiSolidContact size={20} />,
     },
   },
   {
     type: "list",
     data: {
-      name: "Posts",
+      name: "Bài đăng",
       icon: <BsPostcard size={20} />,
       list: [
-        { path: "/manager/posts", name: "Posts" },
-        { path: "/manager/posts/create", name: "Create New Post" },
+        { path: "/manager/posts", name: "Danh sách bài đăng" },
+        { path: "/manager/posts/create", name: "Tạo bài đăng mới" },
       ],
     },
   },
   {
     type: "list",
     data: {
-      name: "Users",
+      name: "Tài khoản",
       icon: <HiOutlineUserCircle size={20} />,
       list: [
-        { path: "/manager/users/create", name: "Create" },
-        { path: "/manager/users", name: "Detail" },
+        { path: "/manager/users/profile", name: "Hồ sơ" },
+        { path: "/manager/users/setting", name: "Cài đặt" },
       ],
     },
   },

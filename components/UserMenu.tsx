@@ -25,7 +25,7 @@ const UserMenu = ({ session }: { session: SessionInterface }) => {
         leaveTo="scale-x-75 scale-y-[0.5625] opacity-0 [transition:opacity_395ms_cubic-bezier(0.4,0,0.2,1)_0ms,transform_263ms_cubic-bezier(0.4,0,0.2,1)_132ms]"
       >
         <Menu.Items className="w-[360px] absolute top-full right-0 bg-white p-4 rounded-xl shadow ">
-          <h5 className="font-semibold text-lg">User Profile</h5>
+          <h5 className="font-semibold text-lg">Thông tin người dùng</h5>
           <div className="flex items-center space-x-4 py-6 w-full">
             <img
               className="w-24 h-24 overflow-hidden rounded-full flex-shrink-0"

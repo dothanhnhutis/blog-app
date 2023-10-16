@@ -89,7 +89,7 @@ const SlateImage = () => {
       </button>
       <Model ref={ref}>
         <div className="flex flex-col space-y-2">
-          <p className="text-base font-medium mb-2">Insert Image</p>
+          <p className="text-base font-medium mb-2">Thêm ảnh</p>
           <Tab.Group>
             <Tab.List className="flex space-x-1 rounded-xl bg-[#ecf2ff] p-1">
               <Tab
@@ -102,7 +102,7 @@ const SlateImage = () => {
                   )
                 }
               >
-                Upload
+                Tập tin cục bộ
               </Tab>
               <Tab
                 className={({ selected }) =>
@@ -114,7 +114,7 @@ const SlateImage = () => {
                   )
                 }
               >
-                Library
+                Trung tâm phương tiện
               </Tab>
             </Tab.List>
             <Tab.Panels>
@@ -126,9 +126,7 @@ const SlateImage = () => {
                   {!data.image && (
                     <>
                       <BsUpload size={36} />
-                      <p className="font-medium text-sm">
-                        Select file to Upload
-                      </p>
+                      <p className="font-medium text-sm">Tải ảnh lên</p>
                     </>
                   )}
 
@@ -156,7 +154,7 @@ const SlateImage = () => {
                   >
                     <BsUpload size={24} />
                     <p className="text-center font-medium text-sm">
-                      Select file to Upload
+                      Tải ảnh lên
                     </p>
 
                     <input
@@ -217,7 +215,7 @@ const SlateImage = () => {
             required
             type="text"
             name=""
-            placeholder="Caption"
+            placeholder="Tiêu đề"
           />
           <div className="flex justify-end space-x-2">
             <button
@@ -227,7 +225,7 @@ const SlateImage = () => {
               type="button"
               className="px-3 py-2 bg-red-500 rounded hover:bg-red-600 text-white disabled:bg-red-600/60"
             >
-              Cancel
+              Huỷ
             </button>
             {data.caption.length > 0 && data.image.length > 0 ? (
               <button
@@ -235,11 +233,11 @@ const SlateImage = () => {
                 type="button"
                 className="px-3 py-2 bg-blue-500 rounded text-white hover:bg-blue-600 disabled:bg-blue-600/60"
               >
-                Add
+                Thêm
               </button>
             ) : (
               <p className="px-3 py-2 bg-blue-500 rounded text-white bg-blue-600/60">
-                Add
+                Thêm
               </p>
             )}
           </div>

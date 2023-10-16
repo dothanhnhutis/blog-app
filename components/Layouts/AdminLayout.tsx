@@ -36,10 +36,10 @@ const AdminLayout = ({
           </div>
         </div>
       </header>
-      <div className="flex">
+      <div className="flex h-[calc(100vh_-_70px)]">
         <SideBar />
-        <div className="flex-auto overflow-scroll max-h-[calc(100vh_-_70px)]">
-          <div className="xl:max-w-7xl xl:mx-auto px-6 pb-16 ">{children}</div>
+        <div className="flex-auto overflow-scroll">
+          <div className="xl:max-w-7xl xl:mx-auto px-6 pb-16">{children}</div>
         </div>
       </div>
     </div>

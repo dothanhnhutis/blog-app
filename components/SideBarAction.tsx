@@ -80,7 +80,7 @@ const SideBarAction = ({ type, data }: SiderBarActionType) => {
                   <ul className={`overflow-hidden`}>
                     {list.map((l, index) => (
                       <li key={index}>
-                        <Link href="">
+                        <Link href={l.path}>
                           <div
                             className={`flex items-center justify-center px-[10px] py-2 mb-0.5 rounded-lg${
                               pathName === l.path
@@ -162,7 +162,7 @@ const SideBarAction = ({ type, data }: SiderBarActionType) => {
       </div>
       <div className="hidden group-hover:block xl:group-hover:hidden pl-[13px] absolute left-full top-2 z-[5] before:content-[''] before:absolute before:left-[9px] before:top-3 before:z-[-1] before:rotate-45  before:h-2 before:w-2 before:bg-[#4D4D4D]">
         <div className="bg-[#4D4D4D] text-white px-2 py-1 rounded-lg">
-          <p className="text-sm font-normal">{name}</p>
+          <p className="text-sm font-normal whitespace-nowrap">{name}</p>
         </div>
       </div>
     </Link>

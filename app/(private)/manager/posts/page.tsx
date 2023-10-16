@@ -7,7 +7,7 @@ import { BsPlus } from "react-icons/bs";
 
 const Posts = () => {
   return (
-    <div>
+    <>
       <div className="relative bg-[#ecf2ff] rounded-xl overflow-hidden px-[25px] pt-[30px] pb-5 mb-6">
         <h4 className="font-semibold text-2xl">Blog app</h4>
         <h6 className="font-normal text-lg">Get the latest news</h6>
@@ -67,7 +67,7 @@ const Posts = () => {
           </ul>
         </nav>
       </div>
-    </div>
+    </>
   );
 };
 

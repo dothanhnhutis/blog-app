@@ -10,7 +10,8 @@ import { SessionInterface } from "@/common.type";
 import Model, { ModelHandle } from "./Model";
 import { classNames } from "@/util";
 import { BsUpload } from "react-icons/bs";
-
+import { BiUpload } from "react-icons/bi";
+import { CiImageOn } from "react-icons/ci";
 const people = [
   { id: 1, name: "Wade Cooper" },
   { id: 2, name: "Arlene Mccoy" },
@@ -41,7 +42,6 @@ const CreatePostForm = ({ session, type, data }: Props) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(payload);
   };
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +59,7 @@ const CreatePostForm = ({ session, type, data }: Props) => {
     reader.readAsDataURL(file);
     reader.onload = () => {
       const result = reader.result as string;
-      console.log(result);
+
       setPayload({ ...payload, thumnail: result });
     };
   };
@@ -77,7 +77,7 @@ const CreatePostForm = ({ session, type, data }: Props) => {
             .includes(query.toLowerCase().replace(/\s+/g, ""))
         );
 
-  const ref = useRef<ModelHandle>(null);
+  const refThumnail = useRef<ModelHandle>(null);
 
   return (
     <>
@@ -86,37 +86,60 @@ const CreatePostForm = ({ session, type, data }: Props) => {
         className="mt-6 p-6 rounded-lg overflow-hidden border-gray-200 border-[1px]"
       >
         <h3 className="font-bold text-xl text-gray-600 mb-4">
-          Create New Post
+          Tạo Bài Đăng Mới
         </h3>
 
-        <div className="flex items-center justify-center text-gray-400 py-2 cursor-pointer w-full rounded border-dashed border-[2px] border-gray-300 mb-4">
-          <label
-            htmlFor=""
-            className="flex flex-col items-center justify-center"
-          >
-            <AiOutlineCloudUpload size={48} />
-            <p className="text-black text-xs">Select file to Upload</p>
-
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => handleChangeImage(e)}
-            />
-          </label>
-          <div>
-            <AiOutlineCloudUpload size={48} />
-            <p className="text-black font-medium text-sm">
-              Select file to Upload
-            </p>
+        <div className="relative group flex flex-col items-center justify-center text-gray-400 py-2 cursor-pointer w-full rounded border-dashed border-[2px] border-gray-300 mb-4">
+          {payload.thumnail ? (
+            <div className="relative w-[300px] h-[300px]">
+              <Image src={payload.thumnail} alt="thumnail" fill sizes="300" />
+            </div>
+          ) : (
+            <>
+              <div className="flex flex-col items-center justify-center">
+                <AiOutlineCloudUpload size={48} />
+                <p className="text-black text-sm">Tải lên ảnh chính </p>
+              </div>
+              <div className="flex flex-col text-xs">
+                <p>. Kích thước: 300 × 300 px</p>
+                <p>. Kích thước tập tin tối đa: 5 MB</p>
+                <p>· Định dạng: JPG, JPEG, PNG</p>
+              </div>
+            </>
+          )}
+          <div className="group-hover:block hidden absolute bottom-full after:absolute after:content-[''] after:top-full after:-translate-y-1 after:left-10 after:rotate-45 after:block after:w-2 after:h-2 after:bg-white">
+            <div className="flex p-2 shadow-lg rounded-md text-black bg-white space-x-1 overflow-hidden">
+              <label
+                htmlFor="thumnail"
+                className="flex flex-col p-2 rounded-lg items-center justify-center hover:text-[#5d87ff] hover:bg-[#ecf2ff]"
+              >
+                <BiUpload size={16} />
+                <p className="text-xs font-normal">Tập tin cục bộ</p>
+                <input
+                  type="file"
+                  id="thumnail"
+                  name="thumnail"
+                  accept="image/*"
+                  className="hidden"
+                  required
+                  onChange={(e) => handleChangeImage(e)}
+                />
+              </label>
+              <button
+                onClick={() => refThumnail.current?.setIsHidden(false)}
+                className="flex flex-col p-2 rounded-lg items-center justify-center hover:text-[#5d87ff] hover:bg-[#ecf2ff]"
+              >
+                <CiImageOn size={16} />
+                <p className="text-xs font-normal">Trung tâm phương tiện</p>
+              </button>
+            </div>
           </div>
         </div>
-
-        {session.user.role === "admin" ? (
+        <label htmlFor="author" className="block text-lg font-medium">
+          Tác giả
+        </label>
+        {false ? (
           <Combobox value={selected} onChange={setSelected}>
-            <label htmlFor="author" className="block text-lg font-medium">
-              Author
-            </label>
             <div className="relative mt-1 mb-4">
               <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left border focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                 <Combobox.Input
@@ -185,42 +208,37 @@ const CreatePostForm = ({ session, type, data }: Props) => {
             </div>
           </Combobox>
         ) : (
-          <div>
-            <label htmlFor="author" className="block text-lg font-medium">
-              Author
-            </label>
-            <div className="flex items-center space-x-4 py-6 w-full">
-              <img
-                className="w-9 h-9 overflow-hidden rounded-full flex-shrink-0"
-                src={`${session.user.avatarUrl ?? "/images/user-1.jpg"}`}
-                alt="User Avatar"
-              />
-              <div className="w-full overflow-hidden">
-                <p className="font-medium text-md">
-                  {`${session.user.username ?? ""}`}
-                </p>
-                <p className="font-normal text-sm text-gray-500">
-                  {`${session.user.role ?? ""}`}
-                </p>
-              </div>
+          <div className="flex items-center space-x-4 py-6 w-full">
+            <img
+              className="w-9 h-9 overflow-hidden rounded-full flex-shrink-0"
+              src={`${session.user.avatarUrl ?? "/images/user-1.jpg"}`}
+              alt="User Avatar"
+            />
+            <div className="w-full overflow-hidden">
+              <p className="font-medium text-md">
+                {`${session.user.username ?? ""}`}
+              </p>
+              <p className="font-normal text-sm text-gray-500">
+                {`${session.user.role ?? ""}`}
+              </p>
             </div>
           </div>
         )}
 
         <div>
           <label className="block text-lg font-medium" htmlFor="title">
-            Title
+            Tiêu đề
           </label>
           <input
             className="border-[1px] border-gray-300 rounded-lg p-2 w-full mb-4 mt-2"
             type="text"
             id="title"
             onChange={(e) => setPayload({ ...payload, title: e.target.value })}
-            placeholder="Input title"
+            placeholder="Nhập tiêu đề"
           />
         </div>
 
-        <p className="block text-lg font-medium">Content</p>
+        <p className="block text-lg font-medium">Nội dung</p>
 
         <RichTextEditor
           init={JSON.parse(payload.content)}
@@ -234,131 +252,72 @@ const CreatePostForm = ({ session, type, data }: Props) => {
             type="button"
             className="px-3 py-2 bg-red-500 rounded hover:bg-red-600 text-white disabled:bg-red-600/60"
           >
-            Cancel
+            Huỷ
           </button>
           <button
             type="submit"
             className="px-3 py-2 bg-blue-500 rounded text-white hover:bg-blue-600 disabled:bg-blue-600/60"
           >
-            Create
+            Tạo
           </button>
         </div>
 
-        <Model ref={ref}>
-          <div className="flex flex-col space-y-2">
-            <p className="text-base font-medium mb-2">Insert Image</p>
-            <Tab.Group>
-              <Tab.List className="flex space-x-1 rounded-xl bg-[#ecf2ff] p-1">
-                <Tab
-                  className={({ selected }) =>
-                    classNames(
-                      "w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-[#5d87ff] outline-none",
-                      selected
-                        ? "bg-white shadow"
-                        : "hover:bg-indigo-200 hover:text-white"
-                    )
-                  }
-                >
-                  Upload
-                </Tab>
-                <Tab
-                  className={({ selected }) =>
-                    classNames(
-                      "w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-[#5d87ff] outline-none",
-                      selected
-                        ? "bg-white shadow"
-                        : "hover:bg-indigo-200 hover:text-white"
-                    )
-                  }
-                >
-                  In Labrary
-                </Tab>
-              </Tab.List>
-              <Tab.Panels>
-                <Tab.Panel>
-                  <label
-                    htmlFor="image-upload"
-                    className="flex flex-col items-center justify-center text-gray-400 py-2 cursor-pointer w-[550px] h-[300px] rounded border-dashed border-[2px] border-gray-300"
-                  >
-                    <input
-                      type="file"
-                      id="image-upload"
-                      name="image-upload"
-                      accept="image/*"
-                      className="hidden"
-                      required
-                      onChange={(e) => handleChangeImage(e)}
-                    />
-                  </label>
-                </Tab.Panel>
-                <Tab.Panel>
-                  <div className="grid grid-flow-row gap-2 grid-cols-5 overflow-y-scroll w-[550px] h-[300px] p-2 border rounded-md">
-                    <label
-                      htmlFor="thumbnail"
-                      className="flex flex-col items-center justify-center text-gray-400 py-2 cursor-pointer w-[100px] h-[100px] rounded border-dashed border-[2px] border-gray-300 mb-4"
-                    >
-                      <BsUpload size={24} />
-                      <p className="text-center font-medium text-sm">
-                        Select file to Upload
-                      </p>
+        <Model ref={refThumnail}>
+          <p>Trung tâm phương tiện</p>
+          <div className="grid grid-flow-row gap-2 grid-cols-5 overflow-y-scroll w-[550px] h-[300px] p-2 border rounded-md mt-4">
+            <label
+              htmlFor="thumbnail"
+              className="flex flex-col items-center justify-center text-gray-400 py-2 cursor-pointer w-[100px] h-[100px] rounded border-dashed border-[2px] border-gray-300 mb-4"
+            >
+              <BsUpload size={24} />
+              <p className="text-center font-medium text-sm">Tải ảnh lên</p>
 
-                      <input
-                        type="file"
-                        id="thumbnail"
-                        name="image"
-                        accept="image/*"
-                        className="hidden"
-                      />
-                    </label>
-                    <div className="relative group">
-                      <div className="relative h-[100px] w-full rounded overflow-hidden">
-                        <Image
-                          alt="image"
-                          src="https://source.unsplash.com/kFrdX5IeQzI"
-                          fill
-                          sizes="100"
-                        />
-                      </div>
-                      <p>image name</p>
-                      <input
-                        className={`absolute top-0 left-0 mt-2 ml-2`}
-                        type="checkbox"
-                      />
-                    </div>
-                  </div>
-                </Tab.Panel>
-              </Tab.Panels>
-            </Tab.Group>
-            <input
-              className="rounded-md border p-2"
-              required
-              type="text"
-              name=""
-              placeholder="Caption"
-            />
-            <div className="flex justify-end space-x-2">
-              <button
-                onClick={() => {
-                  ref.current?.setIsHidden(true);
-                }}
-                type="button"
-                className="px-3 py-2 bg-red-500 rounded hover:bg-red-600 text-white disabled:bg-red-600/60"
-              >
-                Cancel
-              </button>
-              {false ? (
-                <button
-                  type="button"
-                  className="px-3 py-2 bg-blue-500 rounded text-white hover:bg-blue-600 disabled:bg-blue-600/60"
-                >
-                  Add
-                </button>
-              ) : (
-                <p className="px-3 py-2 bg-blue-500 rounded text-white bg-blue-600/60">
-                  Add
-                </p>
-              )}
+              <input
+                type="file"
+                id="thumbnail"
+                name="image"
+                accept="image/*"
+                className="hidden"
+              />
+            </label>
+            <div className="relative group">
+              <div className="relative h-[100px] w-full rounded overflow-hidden">
+                <Image
+                  alt="image"
+                  src="https://source.unsplash.com/kFrdX5IeQzI"
+                  fill
+                  sizes="100"
+                />
+              </div>
+              <p>image name</p>
+              <input
+                className={`absolute top-0 left-0 mt-2 ml-2`}
+                type="checkbox"
+              />
             </div>
+          </div>
+          <div className="flex justify-end space-x-2 mt-4">
+            <button
+              onClick={() => {
+                refThumnail.current?.setIsHidden(true);
+              }}
+              type="button"
+              className="px-3 py-2 bg-red-500 rounded hover:bg-red-600 text-white disabled:bg-red-600/60"
+            >
+              Cancel
+            </button>
+            {true ? (
+              <button
+                type="button"
+                className="px-3 py-2 bg-blue-500 rounded text-white hover:bg-blue-600 disabled:bg-blue-600/60"
+              >
+                Add
+              </button>
+            ) : (
+              <p className="px-3 py-2 bg-blue-500 rounded text-white bg-blue-600/60">
+                Add
+              </p>
+            )}
           </div>
         </Model>
       </form>
