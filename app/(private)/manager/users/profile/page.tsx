@@ -10,10 +10,23 @@ import PostCard from "@/components/PostCard";
 const Profile = () => {
   return (
     <>
-      <div className="rounded-lg overflow-hidden mb-6">
-        <div className="relative w-full h-[330px]">
-          <Image src="/images/profilebg.jpg" alt="thumnail" fill sizes="" />
+      <div className="rounded-lg overflow-hidden mb-6 border">
+        <div className="relative w-full h-[330px] ">
+          <Image
+            src="/images/profilebg.jpg"
+            className="object-cover"
+            alt="thumnail"
+            fill
+            sizes=""
+          />
+          <label
+            htmlFor=""
+            className="absolute top-0 left-0 bg-black w-full h-full z-10"
+          >
+            Sửa
+          </label>
         </div>
+
         <div className="relative bg-white flex flex-wrap xl:flex-nowrap tems-center justify-center">
           <div className="flex items-center justify-around m-6 gap-2 order-2 basis-5/12 xl:basis-1/3 xl:max-w-1/3 flex-grow-0 xl:order-none">
             <div className="flex flex-col items-center justify-center">
@@ -60,7 +73,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="bg-gray-100 flex justify-end items-center order-1 basis-full xl:order-none">
+        <div className="bg-gray-100 flex justify-end items-center order-1 basis-full xl:order-none p-2 ">
           adasd
         </div>
       </div>

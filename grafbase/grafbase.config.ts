@@ -1,5 +1,5 @@
 import { g, auth, config } from "@grafbase/sdk";
-// @ts-ignore
+
 const User = g
   .model("User", {
     username: g.string().length({ min: 2, max: 40 }).optional(),
@@ -8,18 +8,18 @@ const User = g
     avatarUrl: g.string().default(""),
     role: g.string().default("admin"), // admin customer poster accountant
     status: g.string().default("active"),
-    posts: g
-      .relation(() => Post)
-      .optional()
-      .list()
-      .optional(),
+    // posts: g
+    //   .relation(() => Post)
+    //   .optional()
+    //   .list()
+    //   .optional(),
     // comments: g.relation(comment).optional().list().optional(),
   })
   .search()
   .auth((rules) => {
     rules.public().read();
   });
-// @ts-ignore
+
 const Post = g
   .model("Post", {
     thumnail: g.string(),
